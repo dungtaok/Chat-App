@@ -1,0 +1,17 @@
+server:
+  port: 2405
+
+spring:
+  application:
+    name: social_app
+  datasource:
+    url: "jdbc:mysql://127.0.0.1:3307/social_app"
+    username: root
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+    
+      
