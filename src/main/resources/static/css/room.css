@@ -10,8 +10,12 @@ html, body {
     padding: 0;
 }
 
+.marginleft-24{
+    margin-left: 24px;
+}
+
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .main-container{
@@ -82,6 +86,7 @@ html, body {
 
 .content-container {
     flex-grow: 4;
+    position: relative;
     background-color: beige;
 }
 
@@ -184,9 +189,193 @@ html, body {
 
 .content-container .information {
     margin: 24px 24px 24px 12px;
-    padding: 0 24px;
+    padding: 64px 200px;
     background-color: burlywood;
     height: -webkit-fill-available;
     border-radius: 10px;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.information {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.information .header .avatar{
+    width: 380px;
+    height: 380px;
+    
+}
+
+.information .header .avatar img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.information .header .property{
+    margin-top: 24px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.information .header .edit-profile{
+    width: 120px;
+    margin-top: 20px;
+    padding: 12px;
+    background-color: blueviolet;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 30px;
+}
+
+.information .header .edit-profile:hover{
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.information .header p{
+    font-size: 20px;
+}
+
+.information .header .property svg {
+    width: 24px;
+    height: 24px;
+}
+
+.information .user-name {
+    font-size: 24px;
+    margin-top: 80px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.information .user-name div{
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+.information .user-name input{
+    padding: 6px 24px;
+    flex-grow: 1;
+    outline: none;
+    border: none;
+    background: white;
+    border-radius: 30px;
+    font-size: 24px;
+    margin-left: 12px;
+}
+
+.information .account{
+    font-size: 24px;
+    margin-top: 58px;
+    width: 100%;
+}
+
+.information .account #username{
+    padding: 6px 24px;
+    font-size: 24px;
+    min-width: 500px;
+    outline: none;
+    border: none;
+    border-radius: 30px;
+    background: white;
+}
+
+.information .account .changePass-btn {
+    margin-top: 48px;
+    display: block;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    padding: 12px;
+    border-radius: 25px;
+    margin-left: calc(100% - 132px);
+}
+
+.information .account .changePass-btn:hover{
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+
+.changePassContainer {
+    position: absolute;
+    /* margin: 24px 24px 24px 12px; */
+    background-color: rgba(0, 0, 0, 0.3);
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.changePasswordModel{
+    min-width: 600px;
+    min-height: 700px;
+    background-color: antiquewhite;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border: none;
+    border-radius: 40px;
+    padding-left: 72px;
+    padding-right: calc(72px + 24px);
+}
+
+.changePasswordModel h2{
+    padding: 36px 0; 
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+}
+
+.changePasswordModel .password-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 63px;
+    margin-right: 24px;
+}
+
+.changePasswordModel .password-form input{
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    padding: 16px 24px;
+    margin-top: 20px;
+    margin-bottom: 36px;
+    border-radius: 25px;
+}
+
+#passwordChangeBtn{
+    font-size: 16px;
+    margin-top: 24px;
+    padding: 20px 16px;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    background-color: aquamarine;
+    align-self: flex-end;
+    margin-right: -36px;
+}
+
+#passwordChangeBtn:hover{
+    opacity: 0.8;
+    cursor: pointer;
 }
