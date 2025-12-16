@@ -41,10 +41,7 @@
         </div>
         
         <div class="content-container">
-            <div class="chatbox hidden">
-                <div class="">
-                    
-                </div>
+            <div class="chatbox">
                 <div class="header">
                     <div class="info">
                         <div class="avatar">
@@ -62,12 +59,7 @@
                 </div>
                 <div class="content">
                     <ul class="conversation">
-                        <li class="message">
-                            <div class="avatar">
-                                <img src="" alt="">
-                            </div>
-                            <p class="body">hello anh em</p>
-                        </li>
+                        <!-- Chứa tin nhắn -->
                     </ul>
                 </div>
                 <div class="footer">
@@ -90,7 +82,12 @@
                 </div>
             </div>
 
-            <div class="information">
+            <div class="information hidden">
+                <div class="returnBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+                    </svg>
+                </div>
                 <div class="header">
                     <div class="avatar">
                         <img src="../avatar-nobita-ngau-1.webp" alt="Ảnh đại diện">
@@ -108,25 +105,40 @@
                 <div class="user-name">
                     <div>
                         <label for="firstname">Họ, tên đệm:</label>
-                        <input disabled="true" type="text" name="" id="firstname">
+                        <input disabled="true" class="profileField" type="text" name="" id="firstname">
                     </div>
                     <div class="marginleft-24">
                         <label for="lastname">Tên:</label>
-                        <input disabled="true" type="text" name="" id="lastname">
+                        <input disabled="true" class="profileField" type="text" name="" id="lastname">
+                        </div>
+                    </div>
+                    
+                    <div class="account">
+                        <label for="username">Tên đăng nhập:</label>
+                        
+                        <input disabled="true" class="profileFied" type="text" name="" id="username">
+                        
+                    <div class="footer-btn">
+                        <div class="confirmUpdateProfile visible">
+                            <input id="cancelUpdateProfile" class="confirmUpdateProfileBtn" type="button" value="Hủy">
+                            <input id="confirmUpdateProfile" class="confirmUpdateProfileBtn" type="button" value="Cập nhật">
+                        </div>
+                        <input class="changePass-btn" type="button" value="Đổi mật khẩu">
                     </div>
                 </div>
 
-                <div class="account">
-                    <label for="username">Tên đăng nhập:</label>
-                    <input disabled="true" type="text" name="" id="username">
-
-                    <input class="changePass-btn" type="button" value="Đổi mật khẩu">
-                </div>
-
             </div>
+
             <div class="changePassContainer hidden">
                 <div class="changePasswordModel">
+                    <div class="returnBtn" >
+                        <svg id="cancelChangePassword" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+                        </svg>
+                    </div>
+
                     <h2>Đổi mật khẩu</h2>
+
 
                     <div class="password-form">
                         <label for="old-password">Mật khẩu hiện tại</label>
@@ -140,6 +152,8 @@
                     <input id="passwordChangeBtn" type="button" value="Đổi mật khẩu">
                 </div>
             </div>
+
+
         </div>
     </div>
         

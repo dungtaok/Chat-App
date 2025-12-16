@@ -2,6 +2,8 @@ package com.example.social_app.controller.Web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 public class WebController {
@@ -10,6 +12,12 @@ public class WebController {
     public String showMessageBox() {
         return "views/room.html";
     }
+
+    @GetMapping("/chat")
+    public String showChatDemo() {
+        return "views/index.html";
+    }
+    
 
     @GetMapping("/")
     public String redirectToLogin() {
