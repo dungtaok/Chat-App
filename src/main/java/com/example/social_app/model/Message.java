@@ -36,7 +36,7 @@ public class Message {
 
     @ManyToOne
     @JoinColumn(name = "message_room_id")
-    MessageRoom messageRoom;    
+    ChatRoom chatRoom;    
 
     
 }

@@ -1,3 +1,4 @@
+import { setToken, getToken, setUsername, getUsername } from "./auth.js";
 
 const loginBtn = document.getElementById('login-btn');
 const loginSubmit = document.getElementById('login-submit');
@@ -6,6 +7,8 @@ const registerSubmit = document.getElementById('register-submit');
 
 var loginForm = document.getElementById('login-form');
 var registerForm = document.getElementById('register-form');
+
+const token = "";
 
 loginBtn.addEventListener('click', function(event) {
     registerForm.style.display = 'none';
@@ -57,6 +60,10 @@ loginSubmit.addEventListener('click', async function(event){
             alert(errorMsg);
             return;
         }
+
+        setToken(tokenstring.data.token);
+        setUsername(tokenstring.data.username);
+
         window.location.href = '/messages';
 
     }catch(error){

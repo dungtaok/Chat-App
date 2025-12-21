@@ -1,4 +1,4 @@
-package com.example.social_app.controller.Web;
+package com.example.social_app.controller.web;
 
 import java.time.LocalDateTime;
 
@@ -10,11 +10,10 @@ import com.example.social_app.model.ChatMessage;
 
 @Controller
 public class ChatController {
-
-    @MessageMapping("/chat") // Maps to /app/chat
-    @SendTo("/topic/messages") // Clients subscribe to /topic/messages
+    @MessageMapping("/chat.send") // Maps to /app/chat.send
+    @SendTo("/public/messages") // Clients subscribe to /topic/messages
     public ChatMessage sendMessage(ChatMessage message) {
-        message.setCreatedAt(LocalDateTime.now().toString());
+            message.setCreatedAt(LocalDateTime.now().toString());
         return message;
     }
 }

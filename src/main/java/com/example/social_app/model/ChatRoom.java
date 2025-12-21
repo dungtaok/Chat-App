@@ -19,29 +19,24 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Entity
-@Table(name = "message_room")
+@Table(name = "chat_room")
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
-public class MessageRoom {
+public class ChatRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
 
     String name;
     LocalDateTime createdAt;
-
     String theme;
 
-    @ManyToMany
-    @JoinTable(name = "user_message_room",
-        joinColumns = @JoinColumn(name="room_id"),
-        inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
+    @ManyToMany(mappedBy = "chatRooms")
     List<User> users;
 
-    @OneToMany(mappedBy = "messageRoom")
+    @OneToMany(mappedBy = "chatRoom")
     List<Message> messages;
 
 }

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/room.css">
+    <link rel="stylesheet" th:href="@{/css/room.css}">
     <link rel="icon" type="image/x-icon" href="../8mTmvN.gif">
     <title>KittyChat</title>
 </head>
@@ -16,16 +16,16 @@
                     <div class="tool">
                         <h2 class="title">Đoạn chat</h2>
                         <div class="text-tool">
-                            <a href="" id="my-info-btn">
+                            <div id="my-info-btn">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
                                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
                                 </svg>
-                            </a>
+                            </div>
 
-                            <a href="" id="chat-shortcut">
+                            <div id="chat-shortcut">
                                 <svg viewBox="6 6 24 24" fill="currentColor" width="20" height="20" aria-hidden="true" class="x14rh7hd x1lliihq x1tzjh5l x1k90msu x2h7rmj x1qfuztq" overflow="visible" style="--x-color: var(--primary-icon);"><path d="M17.305 16.57a1.998 1.998 0 0 0-.347.467l-1.546 2.87a.5.5 0 0 0 .678.677l2.87-1.545c.171-.093.328-.21.466-.347l8.631-8.631a1.5 1.5 0 1 0-2.121-2.122l-8.631 8.632z"></path><path d="M18 10.5a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1h-6a4 4 0 0 0-4 4v12a4 4 0 0 0 4 4h12a4 4 0 0 0 4-4v-6a1 1 0 0 0-1-1h-.5a1 1 0 0 0-1 1v6a1.5 1.5 0 0 1-1.5 1.5H12a1.5 1.5 0 0 1-1.5-1.5V12a1.5 1.5 0 0 1 1.5-1.5h6z"></path></svg>
-                            </a>
+                            </div>
                         </div>
                     </div>
                     <div class="search-bar">
@@ -37,6 +37,27 @@
                         <input type="text" name="" id="" placeholder="Tìm kiếm"/>
                     </div>
                 </div>
+
+                <div class="body">
+                    <ul class="conversations">
+                        <li class="conversation-item" id="general-channel-js">
+                            <img th:src="@{/images/avatar-nobita-ngau-1.webp}" alt="" class="conversation-avt">
+                            <div class="conversation-text">
+                                <h3 class="conversation-user">General</h3>
+                                <p class="conversation-chat"></p>
+                            </div>
+                            <div class="conversation-status"></div>
+                        </li>
+                        <li class="conversation-item">
+                            <img th:src="@{/images/avatar-nobita-ngau-1.webp}" alt="" class="conversation-avt">
+                            <div class="conversation-text">
+                                <h3 class="conversation-user">Đỗ Dũng</h3>
+                                <p class="conversation-chat">Hello anh em nha</p>
+                            </div>
+                            <div class="conversation-status"></div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         
@@ -45,9 +66,9 @@
                 <div class="header">
                     <div class="info">
                         <div class="avatar">
-                            <img src="../8mTmvN.gif" alt="">
+                            <img th:src="@{/images/avatar-nobita-ngau-1.webp}" alt="">
                         </div>
-                        <p class="user-name">Nguyễn Hoàng Long</p>
+                        <p class="user-name">General</p>
                     </div>
                     <div class="action">
                         <div class="detail">
@@ -60,6 +81,15 @@
                 <div class="content">
                     <ul class="conversation">
                         <!-- Chứa tin nhắn -->
+                        <!-- <li class="myMessage">
+                            <img src="../8mTmvN.gif" alt="" class="msgAvt">
+                            <p class="msgBody">Hellooo</p>
+                        </li>
+
+                        <li class="yourMessage">
+                            <img src="../8mTmvN.gif" alt="" class="msgAvt">
+                            <p class="msgBody">Lô con cak im mẹ m mồm vào.</p>
+                        </li> -->
                     </ul>
                 </div>
                 <div class="footer">
@@ -73,6 +103,11 @@
                     </div>
                     <div class="chat-bar">
                         <input type="text" class="chat-field">
+                        <div class="send-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
+                            <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z"/>
+                            </svg>
+                        </div>
                     </div>
                     <div class="chat-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-smile-fill" viewBox="0 0 16 16">
@@ -90,10 +125,15 @@
                 </div>
                 <div class="header">
                     <div class="avatar">
-                        <img src="../avatar-nobita-ngau-1.webp" alt="Ảnh đại diện">
+                        <img id="avatar-img" th:src="${not #strings.isEmpty(userData.avatar)} 
+                            ? 'data:image/png;base64,' + ${userData.avatar} 
+                            : @{/images/defaultAvatar.jpg}" alt="Ảnh đại diện">
+                    </div>
+                    <div class="changeAvt">
+                        <input type="file" name="avatar" id="avatar-input" accept="image/png, image/jpeg, image/webp" class="visible">
                     </div>
                     <div class="property">
-                        <h2 id="name">Đỗ Dũng</h2>
+                        <h2 id="name"><span th:text="${userData.firstName}+' '+${userData.lastName}">Full Name</span></h2>
                         <div class="edit-profile">
                                 <p>Edit Profile</p>
                                 <svg viewBox="-2.4 -2.4 28.80 28.80" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000" transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15.4998 5.50067L18.3282 8.3291M13 21H21M3 21.0004L3.04745 20.6683C3.21536 19.4929 3.29932 18.9052 3.49029 18.3565C3.65975 17.8697 3.89124 17.4067 4.17906 16.979C4.50341 16.497 4.92319 16.0772 5.76274 15.2377L17.4107 3.58969C18.1918 2.80865 19.4581 2.80864 20.2392 3.58969C21.0202 4.37074 21.0202 5.63707 20.2392 6.41812L8.37744 18.2798C7.61579 19.0415 7.23497 19.4223 6.8012 19.7252C6.41618 19.994 6.00093 20.2167 5.56398 20.3887C5.07171 20.5824 4.54375 20.6889 3.48793 20.902L3 21.0004Z" stroke="#000000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
@@ -104,19 +144,19 @@
 
                 <div class="user-name">
                     <div>
-                        <label for="firstname">Họ, tên đệm:</label>
-                        <input disabled="true" class="profileField" type="text" name="" id="firstname">
+                        <label for="firstname" >Họ, tên đệm:</label>
+                        <input disabled="true" class="profileField" type="text" name="" id="firstname" th:value="${userData.firstName}">
                     </div>
                     <div class="marginleft-24">
                         <label for="lastname">Tên:</label>
-                        <input disabled="true" class="profileField" type="text" name="" id="lastname">
+                        <input disabled="true" class="profileField" type="text" name="" id="lastname" th:value="${userData.lastName}">
                         </div>
                     </div>
                     
                     <div class="account">
                         <label for="username">Tên đăng nhập:</label>
                         
-                        <input disabled="true" class="profileFied" type="text" name="" id="username">
+                        <input disabled="true" class="profileFied" type="text" name="" id="username" th:value="${userData.username}">
                         
                     <div class="footer-btn">
                         <div class="confirmUpdateProfile visible">
@@ -156,7 +196,16 @@
 
         </div>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
         
-    <script src="../js/room.js"></script>
+    <script type="module" th:src="@{/js/room.js}"></script>
+    <script type="module" th:src="@{/js/roomChat.js}"></script>
+    <script th:inline="javascript">
+        window.appConfig = {
+            defaultAvatar: /*[[@{/images/defaultAvatar.jpg}]]*/ '/images/defaultAvatar.jpg'
+        };
+    </script>
 </body>
 </html>

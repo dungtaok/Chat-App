@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/login.css">
-    <link rel="icon" type="image/x-icon" href="../8mTmvN.gif">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
     <title>KittyChat</title>
 </head>
 <body>
@@ -41,6 +40,6 @@
         </div>
     </div>
 
-    <script src="../js/login.js"></script>
+    <script type="module" th:src="@{/js/login.js}"></script>
 </body>
 </html>

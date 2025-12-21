@@ -13,13 +13,9 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.webmvc.autoconfigure.WebMvcProperties.Apiversion.Use;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.social_app.dto.request.AuthenticationRequest;
@@ -29,7 +25,6 @@ import com.example.social_app.dto.response.IntrospectResponse;
 import com.example.social_app.model.User;
 import com.example.social_app.repository.UserRepository;
 
-import java.net.http.HttpResponse;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -75,7 +70,7 @@ public class AuthenticationService {
 
         var token = generateToken(user);
 
-        return AuthenticationResponse.builder().authenticated(true).token(token).build();
+        return AuthenticationResponse.builder().authenticated(true).username(request.getUsername()).token(token).build();
     }
 
     private String generateToken(User user){
@@ -99,7 +94,5 @@ public class AuthenticationService {
             throw new RuntimeException(e);
         }
     }
-
-
 
 }

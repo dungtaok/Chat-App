@@ -8,6 +8,7 @@ html, body {
 *{
     margin: 0;
     padding: 0;
+    user-select: none;
 }
 
 .marginleft-24{
@@ -29,7 +30,7 @@ html, body {
 }
 
 .sidebar-container {
-    flex-grow: 1;
+    width: 30%;
     background-color: aquamarine;
     height: 100%;
 }
@@ -55,7 +56,7 @@ html, body {
     display: flex;
     padding: 14px 10px ;
     border-radius: 45px;
-
+    margin: 8px 0 7px 0;
 }
 
 .sidebar .search-bar input{
@@ -67,6 +68,10 @@ html, body {
     font-size: 16px;
     font-weight: 500;
     color: #333;
+}
+
+.text-tool {
+    display: flex;
 }
 
 .text-tool svg{
@@ -87,9 +92,51 @@ html, body {
     padding: 0 12px
 }
 
+.sidebar .body {
+    width: 100%;
+    height: calc(100% - 120px - 7px);
+    border-top: 1px solid #e4e1e1;
+}
+
+.conversations {
+    list-style: none;
+    width: calc(100% + 8px + 16px);
+    max-height: 100%;
+    /* background-color: bisque; */
+    margin-left: -8px;
+    overflow-y: auto;
+}
+
+.conversations .conversation-item {
+    padding: 8px;
+    display: flex;
+    width: calc(100% - 16px);
+    align-items: center;
+}
+.conversations .conversation-item:hover{
+    cursor: pointer;
+    background-color: #ccc;
+    border-radius:10px;
+}
+.conversation-item .conversation-avt {
+    height: 56px;
+    width: 56px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 45px;
+    margin-right: 16px;
+}
+
+.conversation-item .conversation-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 8px 0;
+    user-select: none;
+}
 
 .content-container {
-    flex-grow: 4;
+    width: 70%;
     position: relative;
     background-color: beige;
 }
@@ -101,6 +148,7 @@ html, body {
     height: -webkit-fill-available;
     border-radius: 10px;
     position: relative;
+
 }
 
 .content-container .chatbox .header{
@@ -142,16 +190,22 @@ html, body {
 .header .info p{
     font-size: 20px;
     align-self: center;
+    user-select: none;
 }
 
 .header .info .avatar {
     height: 70%;
+    width: auto;  
+    aspect-ratio: 1 / 1;
     align-self: center;
     margin-right: 8px;
 }
 
 .header .info .avatar img {
     height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
     border-radius: 50%;
     align-self: center;
 }
@@ -163,6 +217,8 @@ html, body {
 
 .conversation {
     list-style: none;
+    height: 100%;
+    overflow-y: auto;
 }
 
 .myMessage {
@@ -174,6 +230,9 @@ html, body {
 
 .myMessage .msgAvt {
     width: 44px;
+    height: 44px;
+    object-fit: cover;
+    object-position: center;
     border-radius: 25px;
     margin-left: 8px;
 }
@@ -195,6 +254,9 @@ html, body {
 
 .yourMessage .msgAvt {
     width: 44px;
+    height: 44px;
+    object-fit: cover;
+    object-position: center;
     border-radius: 25px;
     margin-right: 8px;
 }
@@ -223,21 +285,44 @@ html, body {
 .footer .chat-bar{
     flex: 1;
     margin: 0 12px;
+    display: flex;
+    align-items: center;
 }
+.footer .chat-bar .send-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px 2px 2px 0;
+    border-radius: 25px;
+    margin-left: 4px;
+}
+
+.footer .chat-bar .send-btn:hover{
+    background-color: #ccc;
+    cursor: pointer;
+}
+
+.footer .chat-bar svg{
+    width: 14px;
+    height: 14px;
+    margin-left: 4px;
+    padding: 10px;
+}
+
 
 .footer .chat-bar .chat-field{
     font-size: 16px;
-    padding: 8px 0;
-    padding-left: 16px;
     border: none;
     outline: none;
-    border-radius: 45px;
-    width: calc(100% - 16px);
+    flex-grow: 1;
+    padding: 8px 16px;
+    border-radius: 18px;
+    display: inline-block;
 }
 
 .content-container .information {
     margin: 24px 24px 24px 12px;
-    padding: 64px 200px;
+    padding: 64px 160px;
     background-color: burlywood;
     height: -webkit-fill-available;
     border-radius: 10px;
@@ -270,9 +355,9 @@ html, body {
 }
 
 .information .header .avatar{
-    width: 380px;
-    height: 380px;
-    
+    width: 300px;
+    height: 300px;
+    justify-self: flex-start;
 }
 
 .information .header .avatar img{
@@ -288,6 +373,15 @@ html, body {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.information .change-avatar{
+    align-self: center;
+    width: fit-content;
+}
+
+.information #avatar-input{
+    width: 100%;
 }
 
 .information .header .edit-profile{
@@ -316,7 +410,7 @@ html, body {
 }
 
 .information .user-name {
-    font-size: 24px;
+    font-size: 22px;
     margin-top: 80px;
     display: flex;
     width: 100%;
@@ -336,19 +430,19 @@ html, body {
     border: none;
     background: white;
     border-radius: 30px;
-    font-size: 24px;
+    font-size: 22px;
     margin-left: 12px;
 }
 
 .information .account{
-    font-size: 24px;
+    font-size: 22px;
     margin-top: 58px;
     width: 100%;
 }
 
 .information .account #username{
     padding: 6px 24px;
-    font-size: 24px;
+    font-size: 22px;
     min-width: 500px;
     outline: none;
     border: none;
@@ -368,7 +462,7 @@ html, body {
     border: none;
     outline: none;
     font-size: 18px;
-    padding: 12px 16px;
+    padding: 12px;
     border-radius: 25px;
 }
 
@@ -389,7 +483,7 @@ html, body {
     outline: none;
     margin-top: 48px;
     font-size: 18px;
-    padding: 12px 16px; 
+    padding: 12px;
     border-radius: 25px;
 }
 
