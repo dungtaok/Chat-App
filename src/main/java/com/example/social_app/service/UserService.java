@@ -4,6 +4,7 @@ import com.example.social_app.dto.request.UserCreationRequest;
 import com.example.social_app.dto.request.UserUpdateRequest;
 import com.example.social_app.dto.response.ApiResponse;
 import com.example.social_app.dto.response.UserResponse;
+import com.example.social_app.model.ChatRoom;
 import com.example.social_app.model.User;
 import com.example.social_app.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -122,6 +123,13 @@ public class UserService {
         }
 
         userRepository.save(user);
+    }
+
+    public List<ChatRoom> getAllConversation(String username) {
+        User user = userRepository.findByUsername(username)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User is not exists"));
+        
+        return user.getChatRooms();
     }
 
 }

@@ -1,9 +1,5 @@
 package com.example.social_app.dto.request;
 
-import java.time.LocalDate;
-
-import org.springframework.web.multipart.MultipartFile;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,10 +12,8 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserUpdateRequest {
-    String bio;
-    MultipartFile avatar;
-    String lastName;
-    String firstName;
-    LocalDate dob;
+public class RoomCreationRequest {
+
+    String name;
+    
 }

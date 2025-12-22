@@ -48,10 +48,10 @@
                             </div>
                             <div class="conversation-status"></div>
                         </li>
-                        <li class="conversation-item">
-                            <img th:src="@{/images/avatar-nobita-ngau-1.webp}" alt="" class="conversation-avt">
+                        <li th:each="conversation : ${conversations}" class="conversation-item" th:id="${conversation.id}">
+                            <img th:src="@{/images/defaultAvatar.jpg}" alt="" class="conversation-avt">
                             <div class="conversation-text">
-                                <h3 class="conversation-user">Đỗ Dũng</h3>
+                                <h3 th:text="${conversation.name}" class="conversation-user">Đỗ Dũng</h3>
                                 <p class="conversation-chat">Hello anh em nha</p>
                             </div>
                             <div class="conversation-status"></div>

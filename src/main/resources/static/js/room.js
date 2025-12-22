@@ -136,21 +136,28 @@ infoReturnBtn.addEventListener("click", function (event) {
 });
 
 
-export async function getAvatar(username){
+export function getAvatar(username){
   var response = "";
   if(avatarStorage.has(username)){
     response = avatarStorage.get(username);
     return response;
   }
-  try{
-    response = await fetch("http://localhost:2405/users/avatar/" + username, {
+    var fetchPromise = fetch("http://localhost:2405/users/avatar/" + username, {
       method : "GET",
       headers : {"Content-Type" : "application/json"}
+    })
+    .then(response=>{
+      if (!response.ok) throw new Error("Lỗi tải avatar");
+      return response.text();
+    })
+    .catch(error => {
+      console.log(error);
+      // Nếu lỗi thì xóa khỏi kho để lần sau thử lại
+      avatarStorage.delete(username); 
+      return ""; // Trả về chuỗi rỗng hoặc ảnh mặc định
     });
-    var imgUrl = await response.text();
-    avatarStorage.set(username, imgUrl);
-  }catch(error){
-    console.log(error);
-  }
-  return imgUrl;
+
+    avatarStorage.set(username, fetchPromise)
+
+  return fetchPromise;
 }

@@ -1,13 +1,12 @@
 package com.example.social_app.controller.web;
 
-import org.springframework.boot.webmvc.autoconfigure.WebMvcProperties.Apiversion.Use;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.social_app.model.ChatRoom;
 import com.example.social_app.model.User;
 import com.example.social_app.service.UserService;
 
@@ -30,18 +29,13 @@ public class WebController {
         if(username == null){
             return "redirect:/login";
         }
-        String token = (String) session.getAttribute("accessToken");
 
         User user = userService.getUserByUsername(username);
+        List<ChatRoom> conversations = user.getChatRooms();
         model.addAttribute("userData", user);
+        model.addAttribute("conversations", conversations);
         return "views/room";
     }
-
-    @GetMapping("/chat")
-    public String showChatDemo() {
-        return "views/index"; 
-    }
-    
 
     @GetMapping("/")
     public String redirectToLogin() {

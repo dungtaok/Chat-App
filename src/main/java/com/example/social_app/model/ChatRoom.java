@@ -7,10 +7,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -36,7 +35,8 @@ public class ChatRoom {
     @ManyToMany(mappedBy = "chatRooms")
     List<User> users;
 
-    @OneToMany(mappedBy = "chatRoom")
-    List<Message> messages;
+    @OneToMany(mappedBy = "recipient")
+    @OrderBy("createdAt ASC")
+    List<ChatMessage> messages;
 
 }

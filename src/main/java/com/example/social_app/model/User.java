@@ -1,12 +1,7 @@
 package com.example.social_app.model;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
@@ -18,7 +13,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -59,14 +53,14 @@ public class User {
     List<User> friends;
     // List<Post> posts;
 
-    @OneToMany(mappedBy = "user")
-    List<Message> messages;
-
     @ManyToMany()
     @JoinTable(name = "user_chat_room",
-        joinColumns = @JoinColumn(name="room_id"),
-        inverseJoinColumns = @JoinColumn(name = "user_id")
+        joinColumns = @JoinColumn(name="user_id"),
+        inverseJoinColumns = @JoinColumn(name = "room_id")
     )
     List<ChatRoom> chatRooms;
+
+    @OneToMany(mappedBy = "sender")
+    List<ChatMessage> messages;
 
 }
