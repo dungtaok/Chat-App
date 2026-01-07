@@ -1,5 +1,6 @@
 package com.example.social_app.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,9 +26,13 @@ public class ChatMessage {
     @ManyToOne
     User sender; // userId    
 
-    String content;
+    @Column(columnDefinition = "TEXT")
+    String content; 
+
     String createdAt; 
 
     @ManyToOne
     ChatRoom recipient; // roomId
+
+    String type;
 }

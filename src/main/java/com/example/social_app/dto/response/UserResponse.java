@@ -18,4 +18,5 @@ public class UserResponse {
     String lastName;
     LocalDate dob;
     Boolean status;
+    String avatar;
 }

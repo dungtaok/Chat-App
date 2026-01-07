@@ -1,4 +1,4 @@
-import { setToken, getToken, setUsername, getUsername } from "./auth.js";
+import { setToken, getToken, setUsername, getUsername, setUserId , getUserId} from "./auth.js";
 
 const loginBtn = document.getElementById('login-btn');
 const loginSubmit = document.getElementById('login-submit');
@@ -63,6 +63,7 @@ loginSubmit.addEventListener('click', async function(event){
 
         setToken(tokenstring.data.token);
         setUsername(tokenstring.data.username);
+        setUserId(tokenstring.data.userId);
 
         window.location.href = '/messages';
 

@@ -12,6 +12,9 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  web:
+    error:
+      include-message: always
 
 jwt:
   signer-key: 'r8O69FMwIKZDPklqKIoPBrMg3HrfCghU'

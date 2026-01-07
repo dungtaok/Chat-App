@@ -70,7 +70,11 @@ public class AuthenticationService {
 
         var token = generateToken(user);
 
-        return AuthenticationResponse.builder().authenticated(true).username(request.getUsername()).token(token).build();
+        return AuthenticationResponse.builder().authenticated(true)
+                    .username(request.getUsername())
+                    .token(token)
+                    .userId(user.getId())
+                    .build();
     }
 
     private String generateToken(User user){

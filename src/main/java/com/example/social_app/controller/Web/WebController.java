@@ -1,11 +1,14 @@
 package com.example.social_app.controller.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.boot.webmvc.autoconfigure.WebMvcProperties.Apiversion.Use;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.example.social_app.RoomType;
 import com.example.social_app.model.ChatRoom;
 import com.example.social_app.model.User;
 import com.example.social_app.service.UserService;
@@ -29,11 +32,44 @@ public class WebController {
         if(username == null){
             return "redirect:/login";
         }
+        User userDetail = userService.getUserByUsername(username);
+        List<ChatRoom> conversations = userDetail.getChatRooms();
+        List<ChatRoom> conversationList = new ArrayList<>();    
 
-        User user = userService.getUserByUsername(username);
-        List<ChatRoom> conversations = user.getChatRooms();
-        model.addAttribute("userData", user);
-        model.addAttribute("conversations", conversations);
+        for(ChatRoom room : conversations){
+            String roomName = "";
+            String avtUrl = "";
+            if(room.getRoomType().equals("PRIVATE")){
+                for(User user : room.getUsers()){
+                    if(user.getId() != userDetail.getId()){
+                        roomName = user.getFirstName() + " " + user.getLastName();
+                        avtUrl = user.getAvatar();
+                    }
+                }
+            }else{
+                for(User user : room.getUsers()){
+                    if(user.getId() != userDetail.getId()){
+                        if(avtUrl.length()==0){
+                            avtUrl = user.getAvatar();
+                        }
+                        roomName += ", " + user.getFirstName() + " " + user.getLastName();
+                    }
+                }
+                roomName = roomName.substring(2);
+            }
+
+            if(roomName.length() > 35){
+                roomName = roomName.substring(0,33);
+                roomName += "...";
+            }
+
+            room.setName(roomName);
+            room.setAvatar(avtUrl);
+            conversationList.add((room));
+        }
+
+        model.addAttribute("userData", userDetail); // user đang đăng nhập    
+        model.addAttribute("conversations", conversationList); // các đoạn chat hiện của user
         return "views/room";
     }
 

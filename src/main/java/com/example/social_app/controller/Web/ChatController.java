@@ -2,6 +2,7 @@ package com.example.social_app.controller.web;
 
 import java.time.LocalDateTime;
 
+import org.aspectj.bridge.Message;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -10,7 +11,10 @@ import org.springframework.stereotype.Controller;
 
 import com.example.social_app.dto.request.MessageRequest;
 import com.example.social_app.model.ChatMessage;
+import com.example.social_app.model.ChatRoom;
 import com.example.social_app.service.MessageService;
+import com.example.social_app.service.MessageTransferService;
+import com.example.social_app.service.RoomService;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +30,8 @@ public class ChatController {
     // có thể gửi public, hoặc private
     SimpMessagingTemplate simpMessagingTemplate; 
     MessageService messageService;
+    MessageTransferService messageTransferService;
+    RoomService roomService;
 
     @MessageMapping("/chat.send") // Maps to /app/chat.send
     @SendTo("/public/messages") // Clients subscribe to /topic/messages
@@ -43,7 +49,14 @@ public class ChatController {
 
         messageService.createNewMessage(chatMessage);
 
-        simpMessagingTemplate.convertAndSend("/queue/room/" + roomId, chatMessage);
+        // simpMessagingTemplate.convertAndSend("/queue/room/" + roomId, chatMessage);
+        // ChatRoom room = roomService.getById(roomId);
+        // room.setLastupdatedAt(LocalDateTime.now());
+        // roomService.saveRoom(room);
+
+        roomService.updateRoomTime(roomId);
+
+        messageTransferService.sendMessageToChannel(roomId, chatMessage);
     }
 
     //Server gửi lại tin nhắn về kênh mà các Clients subcribe

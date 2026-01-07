@@ -9,11 +9,13 @@ import com.example.social_app.model.ChatRoom;
 import com.example.social_app.model.User;
 import com.example.social_app.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +25,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -41,8 +45,30 @@ public class UserController {
 
     @GetMapping("/users")
     public List<UserResponse> getAllUser(){
-        return userService.getALlUser();
+            return userService.getALlUser();
     }
+
+    @PostMapping("/users/auth")
+    public boolean checkPassword(@RequestBody String pw, HttpServletRequest request) {
+        return userService.checkPassword(pw, request);
+    }
+
+    @PostMapping("/users/update-pw")
+    public void changePassword(@RequestBody String pw, HttpServletRequest request) {
+        userService.changePassword(pw, request);
+    }
+    
+
+    @GetMapping("/users/{id}")
+    public UserResponse getUserById(@PathVariable(name = "id") String id) {
+        return userService.getUserById(id);
+    }
+
+    @DeleteMapping("/users/{id}")
+    public void deleteRoom(@PathVariable(name = "id") String id, @RequestBody String roomId) {
+        userService.deleteRoom(id, roomId);
+    }
+    
 
     @PostMapping("/user/{id}")
     public void updateUser(@PathVariable(name = "id") String id  ,@RequestBody UserUpdateRequest request){

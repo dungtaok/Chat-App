@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/room.css}">
-    <link rel="icon" type="image/x-icon" href="../8mTmvN.gif">
+    <!-- <link rel="stylesheet" href="../css/room.css"> -->
+    <link rel="icon" type="image/x-icon" th:href="@{/images/icons8-hello-kitty-bubbles-310.png}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <title>KittyChat</title>
 </head>
 <body>
@@ -23,52 +28,64 @@
                                 </svg>
                             </div>
 
-                            <div id="chat-shortcut">
+                            <!-- <div id="chat-shortcut">
                                 <svg viewBox="6 6 24 24" fill="currentColor" width="20" height="20" aria-hidden="true" class="x14rh7hd x1lliihq x1tzjh5l x1k90msu x2h7rmj x1qfuztq" overflow="visible" style="--x-color: var(--primary-icon);"><path d="M17.305 16.57a1.998 1.998 0 0 0-.347.467l-1.546 2.87a.5.5 0 0 0 .678.677l2.87-1.545c.171-.093.328-.21.466-.347l8.631-8.631a1.5 1.5 0 1 0-2.121-2.122l-8.631 8.632z"></path><path d="M18 10.5a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1h-6a4 4 0 0 0-4 4v12a4 4 0 0 0 4 4h12a4 4 0 0 0 4-4v-6a1 1 0 0 0-1-1h-.5a1 1 0 0 0-1 1v6a1.5 1.5 0 0 1-1.5 1.5H12a1.5 1.5 0 0 1-1.5-1.5V12a1.5 1.5 0 0 1 1.5-1.5h6z"></path></svg>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="search-container">
+                        <div class="search-return hidden">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+                                </svg>
+                        </div>
+                        <div class="search-bar">
+                            <div class="search-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                                </svg>
                             </div>
+                            <input type="text" name="q" id="" placeholder="Tìm kiếm"/>
                         </div>
                     </div>
-                    <div class="search-bar">
-                        <div class="search-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                            </svg>
-                        </div>
-                        <input type="text" name="" id="" placeholder="Tìm kiếm"/>
-                    </div>
+
                 </div>
 
-                <div class="body">
+                <div class="body conversation-area">
                     <ul class="conversations">
-                        <li class="conversation-item" id="general-channel-js">
-                            <img th:src="@{/images/avatar-nobita-ngau-1.webp}" alt="" class="conversation-avt">
-                            <div class="conversation-text">
-                                <h3 class="conversation-user">General</h3>
-                                <p class="conversation-chat"></p>
-                            </div>
-                            <div class="conversation-status"></div>
-                        </li>
                         <li th:each="conversation : ${conversations}" class="conversation-item" th:id="${conversation.id}">
-                            <img th:src="@{/images/defaultAvatar.jpg}" alt="" class="conversation-avt">
+                            <img th:src="${not #strings.isEmpty(conversation.avatar)} 
+                            ? 'data:image/png;base64,' + ${conversation.avatar} 
+                            : @{/images/defaultAvatar.jpg}" alt="" class="conversation-avt">
                             <div class="conversation-text">
                                 <h3 th:text="${conversation.name}" class="conversation-user">Đỗ Dũng</h3>
-                                <p class="conversation-chat">Hello anh em nha</p>
+                                <!-- <p class="conversation-chat">Hello anh em nha</p> -->
                             </div>
-                            <div class="conversation-status"></div>
+                            <div class="conversation-status" th:id="'dlt-cv-' + ${conversation.id}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                                </svg>
+                            </div>
                         </li>
+                    </ul>
+                </div>
+
+                <div class="body search-area hidden">   
+                    <ul class="conversations">
+                        <!-- Tìm kiếm user -->
                     </ul>
                 </div>
             </div>
         </div>
         
         <div class="content-container">
-            <div class="chatbox">
+            <div class="chatbox hidden">
                 <div class="header">
                     <div class="info">
                         <div class="avatar">
-                            <img th:src="@{/images/avatar-nobita-ngau-1.webp}" alt="">
+                            <img  alt="">
                         </div>
-                        <p class="user-name">General</p>
+                        <p class="user-name"></p>
                     </div>
                     <div class="action">
                         <div class="detail">
@@ -109,15 +126,15 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="chat-icon">
+                    <!-- <div class="chat-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-smile-fill" viewBox="0 0 16 16">
                         <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16M7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5M4.285 9.567a.5.5 0 0 1 .683.183A3.5 3.5 0 0 0 8 11.5a3.5 3.5 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683M10 8c-.552 0-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5S10.552 8 10 8"/>
                         </svg>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
-            <div class="information hidden">
+            <div class="information">
                 <div class="returnBtn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
@@ -169,6 +186,21 @@
 
             </div>
 
+            <div class="user-detail-info hidden">
+                <div class="returnBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+                    </svg>
+                </div>
+                <div class="header">
+                    <div class="avatar">
+                        <img class="user-detail-avt">
+                    </div>
+                    <h2 class="user-detail-name"></h2>
+                </div>
+
+            </div>
+
             <div class="changePassContainer hidden">
                 <div class="changePasswordModel">
                     <div class="returnBtn" >
@@ -182,14 +214,60 @@
 
                     <div class="password-form">
                         <label for="old-password">Mật khẩu hiện tại</label>
-                        <input type="password" name="" id="old-password">
+                        <input type="password" required name="" id="old-password">
                         <label for="new-password">Mật khẩu mới</label>
-                        <input type="password" name="" id="new-password">
+                        <input type="password" required name="" id="new-password">
                         <label for="re-new-password">Xác nhận mật khẩu</label>
-                        <input type="password" name="" id="re-new-password">
+                        <input type="password" required name="" id="re-new-password">
                     </div>
 
                     <input id="passwordChangeBtn" type="button" value="Đổi mật khẩu">
+                </div>
+            </div>
+
+            <div class="chatMemberContainer hidden">
+                <div class="chatMemberModal">
+                    <div class="returnBtn" id="member-return-btn">
+                        <svg id="cancelEditMember" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+                        </svg>
+                    </div>
+
+                    <h2>Thành viên</h2>
+
+
+                    <div class="member-area">
+                        <!-- <div class="member">
+                            <div class="member-info">
+                                <img src="" alt="" class="member-avt">
+                                <h5 class="member-name">Đỗ Khắc Dũng</h5>
+                            </div>
+
+                            <button class="delete-btn">Xóa</button>
+                        </div> -->
+                    </div>
+
+                    <div class="member-search-area hidden">
+                        <div class="search-member">
+                            <input type="text" placeholder="Tìm kiếm người dùng" name="q" id="search-bar-member">
+                        </div>
+
+                        <div class="search-member-result">
+                            <!-- <div class="member">
+                                <div class="member-info">
+                                    <img src="" alt="" class="member-avt">
+                                    <h5 class="member-name">Đỗ Khắc Dũng</h5>
+                                </div>
+
+                                <button class="add-btn">Thêm</button>
+                            </div> -->
+                        </div>
+                    </div>
+
+
+                    <input type="button" value="Thêm thành viên" class="add-member-btn"/>
+                    <input type="button" value="Hủy" class="hidden cancel-add-member-btn"/>
+                    <!-- <input id="passwordChangeBtn" type="button" value="Đổi mật khẩu"> -->
                 </div>
             </div>
 
@@ -202,10 +280,18 @@
         
     <script type="module" th:src="@{/js/room.js}"></script>
     <script type="module" th:src="@{/js/roomChat.js}"></script>
+    <script type="module" th:src="@{/js/encryption.js}"></script>   
     <script th:inline="javascript">
         window.appConfig = {
             defaultAvatar: /*[[@{/images/defaultAvatar.jpg}]]*/ '/images/defaultAvatar.jpg'
         };
+    </script>
+    <script type="importmap">
+    {
+        "imports": {
+            "crypto-js": "https://cdn.jsdelivr.net/npm/crypto-js@4.2.0/+esm"
+        }
+    }
     </script>
 </body>
 </html>

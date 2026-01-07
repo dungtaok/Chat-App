@@ -1,12 +1,18 @@
 package com.example.social_app.service;
 
+import com.example.social_app.dto.request.AuthenticationRequest;
 import com.example.social_app.dto.request.UserCreationRequest;
 import com.example.social_app.dto.request.UserUpdateRequest;
 import com.example.social_app.dto.response.ApiResponse;
 import com.example.social_app.dto.response.UserResponse;
 import com.example.social_app.model.ChatRoom;
 import com.example.social_app.model.User;
+import com.example.social_app.repository.RoomRepository;
 import com.example.social_app.repository.UserRepository;
+
+import jakarta.persistence.PrePersist;
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.modelmapper.ModelMapper;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +35,9 @@ public class UserService {
     ModelMapper modelMapper;
     PasswordEncoder passwordEncoder;
     ImageService imageService;
+    RoomRepository roomRepository;
+
+    AuthenticationService authenticationService;
 
     public ApiResponse<Void> createNewUser(UserCreationRequest request) {
         ApiResponse<Void> response = new ApiResponse<>();
@@ -60,9 +69,13 @@ public class UserService {
         return userRepository.findByUsername(username).get();
     }
 
-    public User getUserById(String id){
-        return userRepository.findById(id)
+    public UserResponse getUserById(String id){
+        User user =  userRepository.findById(id)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not exists"));
+
+        UserResponse response = modelMapper.map(user, UserResponse.class);
+
+        return response;
     }
 
     public void updateUser(String id, UserUpdateRequest request) {
@@ -130,6 +143,46 @@ public class UserService {
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User is not exists"));
         
         return user.getChatRooms();
+    }
+
+    public void deleteRoom(String id, String roomId) {
+        User user = userRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "User is not exist"));
+        ChatRoom room = roomRepository.findById(roomId).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Room is not exist"));
+
+        List<ChatRoom> newRooms = new ArrayList<>();
+        List<User> newUsers = new ArrayList<>();
+
+        for(ChatRoom chatRoom : user.getChatRooms()){
+            if(!chatRoom.getId().equals(roomId)){
+                newRooms.add(chatRoom);
+            }
+        }
+
+        for(User u : room.getUsers()){
+            if(!u.getId().equals(id)){
+                newUsers.add(u);
+            }
+        }
+
+        user.setChatRooms(newRooms);
+        room.setUsers(newUsers);
+
+        userRepository.save(user);
+        roomRepository.save(room);
+    }
+
+    public boolean checkPassword(String pw, HttpServletRequest request) {
+        String username = (String) request.getSession(true).getAttribute("username");
+        AuthenticationRequest authenticationRequest = AuthenticationRequest.builder().username(username).password(pw).build();
+        boolean authenticated = authenticationService.authenticate(authenticationRequest).isAuthenticated();
+        return authenticated;
+    }
+
+    public void changePassword(String pw, HttpServletRequest request) {
+        String username = (String) request.getSession().getAttribute("username");
+        User user = userRepository.findByUsername(username).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "User is not exist"));
+        user.setPassword(passwordEncoder.encode(pw));
+        userRepository.save(user);
     }
 
 }
