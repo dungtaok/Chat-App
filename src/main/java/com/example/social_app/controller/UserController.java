@@ -4,6 +4,8 @@ package com.example.social_app.controller;
 import com.example.social_app.dto.request.UserCreationRequest;
 import com.example.social_app.dto.request.UserUpdateRequest;
 import com.example.social_app.dto.response.ApiResponse;
+import com.example.social_app.dto.response.RoomIdResponse;
+import com.example.social_app.dto.response.RoomResponse;
 import com.example.social_app.dto.response.UserResponse;
 import com.example.social_app.model.ChatRoom;
 import com.example.social_app.model.User;
@@ -92,7 +94,11 @@ public class UserController {
     public List<ChatRoom> getAllConversation(@PathVariable("username") String username) {
         return userService.getAllConversation(username);
     }
-    
+
+    @GetMapping("/users/conversation/{username}")
+    public List<RoomResponse> getAllDataConversation(@PathVariable("username") String username) {
+        return userService.getAllDataConversation(username);
+    }
     
 
 }

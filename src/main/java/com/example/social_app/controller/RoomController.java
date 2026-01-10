@@ -81,5 +81,10 @@ public class RoomController {
         return roomService.getRoomDetail(id, request);
     }
     
+    // @GetMapping("/user/{id}")
+    // public List<RoomResponse> getAllConversationByUserId(@PathVariable(name = "id")String id) {
+    //     return roomService.getAllRoomByUserId(id);
+    // }
+    
     
 }

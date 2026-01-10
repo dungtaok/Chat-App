@@ -4,13 +4,13 @@ import com.example.social_app.dto.request.AuthenticationRequest;
 import com.example.social_app.dto.request.UserCreationRequest;
 import com.example.social_app.dto.request.UserUpdateRequest;
 import com.example.social_app.dto.response.ApiResponse;
+import com.example.social_app.dto.response.RoomResponse;
 import com.example.social_app.dto.response.UserResponse;
 import com.example.social_app.model.ChatRoom;
 import com.example.social_app.model.User;
 import com.example.social_app.repository.RoomRepository;
 import com.example.social_app.repository.UserRepository;
 
-import jakarta.persistence.PrePersist;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.modelmapper.ModelMapper;
@@ -143,6 +143,48 @@ public class UserService {
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User is not exists"));
         
         return user.getChatRooms();
+    }
+
+    public List<RoomResponse> getAllDataConversation(String username) {
+        User userDetail = userRepository.findByUsername(username)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User is not exists"));
+        
+        List<ChatRoom> conversations = userDetail.getChatRooms();
+        List<RoomResponse> conversationList = new ArrayList<>();    
+
+        for(ChatRoom room : conversations){
+            String roomName = "";
+            String avtUrl = "";
+            if(room.getRoomType().equals("PRIVATE")){
+                for(User user : room.getUsers()){
+                    if(user.getId() != userDetail.getId()){
+                        roomName = user.getFirstName() + " " + user.getLastName();
+                        avtUrl = user.getAvatar();
+                    }
+                }
+            }else{
+                for(User user : room.getUsers()){
+                    if(user.getId() != userDetail.getId()){
+                        if(avtUrl!=null && avtUrl.length()!=0){
+                            avtUrl = user.getAvatar();
+                        }
+                        roomName += ", " + user.getFirstName() + " " + user.getLastName();
+                    }
+                }
+                roomName = roomName.substring(2);
+            }
+
+            if(roomName.length() > 35){
+                roomName = roomName.substring(0,33);
+                roomName += "...";
+            }
+
+            room.setName(roomName);
+            room.setAvatar(avtUrl);
+            RoomResponse roomResponse = modelMapper.map(room, RoomResponse.class);
+            conversationList.add((roomResponse));
+        }
+        return conversationList;
     }
 
     public void deleteRoom(String id, String roomId) {

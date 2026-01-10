@@ -5,13 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.boot.webmvc.autoconfigure.WebMvcProperties.Apiversion.Use;
-import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.example.social_app.RoomType;
 import com.example.social_app.dto.request.MessageRequest;
 import com.example.social_app.dto.request.RoomCreationRequest;
 import com.example.social_app.dto.response.RoomCheckExistResponse;
@@ -64,7 +61,7 @@ public class RoomService {
             message.setCreatedAt(chatMessage.getCreatedAt());
             message.setSender(chatMessage.getSender().getUsername());
             message.setRecipient(chatMessage.getRecipient().getId());
-
+            message.setType(chatMessage.getType());
             response.add(message);
         }
 
@@ -233,4 +230,5 @@ public class RoomService {
 
         return RoomResponse.builder().avatar(avtUrl).name(roomName).build();
     }
+
 }

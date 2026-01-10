@@ -11,4 +11,4 @@ public class SocialAppApplication {
 		SpringApplication.run(SocialAppApplication.class, args);
 	}
 
-}
+}	

@@ -49,7 +49,7 @@ public class WebController {
             }else{
                 for(User user : room.getUsers()){
                     if(user.getId() != userDetail.getId()){
-                        if(avtUrl.length()==0){
+                        if(avtUrl!=null && avtUrl.length()!=0){
                             avtUrl = user.getAvatar();
                         }
                         roomName += ", " + user.getFirstName() + " " + user.getLastName();

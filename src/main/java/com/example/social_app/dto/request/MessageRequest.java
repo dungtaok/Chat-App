@@ -1,9 +1,5 @@
 package com.example.social_app.dto.request;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,9 +12,10 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
-public class MessageRequest {
+public class MessageRequest <T> {
     String sender; // userId    
-    String content;
+    T content;
     String createdAt; 
     String recipient; // roomId
+    String type;
 }

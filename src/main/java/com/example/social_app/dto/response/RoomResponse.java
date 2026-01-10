@@ -17,9 +17,11 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 public class RoomResponse {
 
+    String id;
     String name;
     LocalDateTime createdAt;
     String theme;
     String avatar;
     LocalDateTime lastupdatedAt;
+    String roomType;
 }

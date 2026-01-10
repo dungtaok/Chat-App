@@ -37,6 +37,26 @@ var memberReturnBtn = document.getElementById("member-return-btn");
 var memberDetailContainer = document.querySelector(".chatMemberContainer");
 var actionMember = document.querySelector(".chatbox .action");
 
+var lastFilterChosen = document.getElementById("filter-all");
+lastFilterChosen.classList.add("item-chosen"); // ban đầu hiển thị toàn bộ
+
+var filterConversationList = document.querySelectorAll(".conversationFilter-item");
+
+var logoutBtn = document.querySelector(".information .logoutBtn");
+
+logoutBtn.addEventListener('click', async function(event){
+  event.preventDefault();
+  var isConfirm = confirm("Bạn có chắc muốn đăng xuất tài khoản không?");
+  if(isConfirm){
+    var fetchLogout = await fetch("http://localhost:2405/logout", {
+      method : "POST"
+    });
+
+    if(fetchLogout.ok){
+      window.location.pathname = "/login";
+    }
+  }
+});
 
 confirmChangePassword.addEventListener('click', async function(event){
   var pw1 = document.getElementById("new-password").value;
@@ -279,7 +299,7 @@ inputSearch.addEventListener("input", async function(event){
     var currentUserId = getUserId();
     const filteredUserList = userList.filter(user => {
         const fullName = (user.firstName + " " + user.lastName).toLowerCase();
-        return fullName.includes(keyword) && user.id!=currentUserId;
+        return fullName.includes(keyword) && user.id!=currentUserId; // true thì lấy
     });
     
     await showListUser(filteredUserList);
@@ -348,7 +368,7 @@ function showListUser(userList){
     }
 }
 
-async function createConversationItem(roomId){
+export async function createConversationItem(roomId){
   var fetchGet = await fetch("http://localhost:2405/chat-room/" + roomId, {
     method : "GET"
   });
@@ -612,3 +632,107 @@ async function addMemberIntoRoom(userId, roomId){
   }
 }
 
+// FILTER
+
+async function showConversationFilterList(rooms){
+  var conversationList = conversationArea.querySelector(".conversations");
+  conversationList.innerHTML = "";
+  for(var room of rooms){
+    var element = await createFilterConversationItem(room);
+    conversationList.appendChild(element);
+  }
+
+  if(rooms.length === 0){
+    var msg = document.createElement("div");
+    msg.classList.add("empty-conversation-msg");
+    msg.innerHTML = "Không có đoạn chat nào!";
+
+    conversationList.appendChild(msg);
+  }
+}
+
+
+export async function createFilterConversationItem(room){
+  var roomName =room.name;
+  var imgUrl = room.avatar;
+
+
+  var conversationItem = document.createElement("li");
+  conversationItem.classList.add("conversation-item");
+  conversationItem.id = room.id;
+  var img = document.createElement("img");
+  img.classList.add("conversation-avt");
+  if (imgUrl==null || imgUrl.trim() == ""){
+      img.src = window.appConfig.defaultAvatar;
+  }else{
+    img.src = "data:image/png;base64," + imgUrl;
+  }
+
+  var div = document.createElement("div");
+  div.classList.add("conversation-text");
+  var h3 = document.createElement("h3");
+  h3.classList.add("conversation-user");
+  h3.innerText = roomName;
+  // var p = document.createElement("p");
+  // p.classList.add("conversation-chat");
+  div.appendChild(h3);
+  // div.appendChild(p);
+
+  var status = document.createElement("div");
+  status.id = "dlt-cv-" + room.id;
+  status.classList.add("conversation-status");
+
+  status.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                                </svg>`;
+
+  conversationItem.appendChild(img);
+  conversationItem.appendChild(div);
+  conversationItem.appendChild(status);
+
+  return conversationItem;
+}
+
+async function getAllConversation(){
+  var curretUserName = getUsername();
+  var fetchGet = await fetch("http://localhost:2405/users/conversation/" + curretUserName , {
+    method : "GET"
+  });
+  var response = await fetchGet.json();
+  return response;
+}
+
+var roomList = null;
+for(var filter of filterConversationList){
+  filter.addEventListener('click', async function(event){
+    var filterStr = this.id.slice(7);
+    if(this != lastFilterChosen){ // nếu click cái filter khác
+      lastFilterChosen.classList.remove("item-chosen");
+      lastFilterChosen = this;
+      console.log(filterStr);
+      this.classList.add("item-chosen");
+      roomList = await getAllConversation();
+      var filteredList = null;
+      var conversationType = null;
+
+      if(filterStr === "all"){
+        conversationType = "ALL";
+        filteredList = roomList;
+      }else if(filterStr === "user"){
+        conversationType = "PRIVATE";
+        filteredList = roomList.filter(room => {
+          var roomType = room.roomType;
+          return roomType === conversationType;
+        });
+      }else if(filterStr === "group"){
+        conversationType = "PUBLIC"
+        filteredList = roomList;
+        filteredList = roomList.filter(room => {
+          var roomType = room.roomType;
+          return roomType === conversationType;
+        });
+      }
+      await showConversationFilterList(filteredList);
+    }
+  });
+}
