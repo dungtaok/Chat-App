@@ -390,6 +390,28 @@ input[type="file"]::file-selector-button {
     padding-top: 16px;
 }
 
+.welcome {
+    margin: 24px 24px 24px 12px;
+    padding: 0 24px;
+    background-color: var(--container-color);
+    height: -webkit-fill-available;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.welcome p {
+    font-size: 28px;
+    color: var(--text-color);
+}
+
+.welcome p span{
+    font-size: 36px;
+}
+
+
 .conversation {
     list-style: none;
     height: 100%;

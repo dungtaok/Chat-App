@@ -16,11 +16,13 @@ var cancelPasswordBtn = document.getElementById("cancelChangePassword");
 var confirmChangePassword = document.getElementById("passwordChangeBtn");
 var changePasswordModal = document.querySelector(".changePasswordModel");
 var fileInput = document.getElementById("avatar-input");
+var welcomeDashboard = document.querySelector(".welcome");
 
 
 var editProfileBtn = document.querySelector(".edit-profile");
 var profileInputField = document.querySelectorAll(".profileField");
 var avatarImg = document.getElementById("avatar-img");
+var nameField = document.querySelector(".property #name");
 
 var updateProfileBtns = document.querySelector(".confirmUpdateProfile");
 var cancelUpdateProfile = document.getElementById("cancelUpdateProfile");
@@ -177,6 +179,8 @@ confirmUpdateProfileBtn.addEventListener("click", async function (event) { // kh
     formData.append("lastName", lastName);
     updated = true;
   }
+
+  nameField.innerText = firstName + " " + lastName;
   
   if (updated) {
     var isConfirm = confirm("Bạn có muốn thay đổi thông tin hay không?");
@@ -226,6 +230,7 @@ confirmUpdateProfileBtn.addEventListener("click", async function (event) { // kh
 myInfoBtn.addEventListener("click", function (event) {
   chatBox.classList.add("hidden");
   infoContent.classList.remove("hidden");
+  welcomeDashboard.classList.add("hidden");
 });
 
 infoReturnBtn.addEventListener("click", function (event) {

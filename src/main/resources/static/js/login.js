@@ -41,7 +41,7 @@ loginSubmit.addEventListener('click', async function(event){
 
         if(!token.ok){
             const errorMsg = await token.text();
-            alert(errorMsg);
+            alert("Đăng nhập thất bại!");
             return;
         }
 
@@ -57,7 +57,7 @@ loginSubmit.addEventListener('click', async function(event){
 
         if(!response.ok){
             const errorMsg = await response.text();
-            alert(errorMsg);
+            alert("Đăng nhập thất bại!");
             return;
         }
 
@@ -101,7 +101,7 @@ registerSubmit.addEventListener('click', async function(event) {
 
         if(!response.ok){
             const errorMsg = await response.text();
-            alert(errorMsg);
+            alert("Đăng kí không thành công!");
             return;
         }
         alert("Đăng kí thành công!");
