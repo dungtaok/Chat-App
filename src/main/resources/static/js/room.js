@@ -10,6 +10,12 @@ var avatarStorage = new Map();
 
 var chatBox = document.querySelector(".chatbox");
 
+var canBack = false;
+
+export function enableCanBack() {
+  canBack = true;
+}
+
 var changePasswordBtn = document.querySelector(".changePass-btn");
 var changePasswordContainer = document.querySelector(".changePassContainer");
 var cancelPasswordBtn = document.getElementById("cancelChangePassword");
@@ -246,8 +252,10 @@ userDetailReturnBtn.addEventListener('click', function (event) {
 
 
 export function hiddenInfoShowChat(){
-  chatBox.classList.remove("hidden");
-  infoContent.classList.add("hidden");
+  if(canBack){
+    chatBox.classList.remove("hidden");
+    infoContent.classList.add("hidden");
+  }
 }
 
 

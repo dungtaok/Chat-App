@@ -1,7 +1,7 @@
 "use strict";
 
 import { getToken, getUserId, getUsername } from "./auth.js";
-import { getAvatar, hiddenInfoShowChat } from "./room.js";
+import { getAvatar, hiddenInfoShowChat, enableCanBack } from "./room.js";
 import { Security } from "./encryption.js";
 
 var messageInput = document.querySelector(".chat-field");
@@ -547,6 +547,8 @@ conversationContainer.addEventListener("click", async function (event) {
     }
     lastChosenItemConversation = roomChosen;
     roomChosen.classList.add("item-chosen");
+
+    enableCanBack();
   }
 
   hiddenInfoShowChat();
