@@ -43,7 +43,7 @@ svg {
 }
 
 input[type="file"]::file-selector-button {
-  background-color: #E4002B; /* Màu đỏ T1 */
+  background-color: var(--icon-padding-color);
   color: white;
   padding: 10px 20px;
   border: none;
