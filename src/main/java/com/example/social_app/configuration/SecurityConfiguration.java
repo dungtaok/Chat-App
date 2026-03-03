@@ -11,6 +11,9 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -53,7 +56,20 @@ public class SecurityConfiguration {
         return jwtAuthenticationConverter;
     }
 
+    @Bean
+    public CorsFilter corsFilter(){
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
 
+        corsConfiguration.addAllowedOrigin("*"); // cho phép các origin 
+        corsConfiguration.addAllowedMethod("*"); // các phương thức đc phép gọi tới API
+        corsConfiguration.addAllowedHeader("*"); 
+
+
+        UrlBasedCorsConfigurationSource  urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
+        urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration); // đăng kí điều kiện cho endpoint của các API
+
+        return new CorsFilter(urlBasedCorsConfigurationSource);
+    }
 
 }
 
